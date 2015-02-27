@@ -1,0 +1,10 @@
+# BASH COMPLETION
+HOMEBREW_COMPLETIONS=`brew --prefix`/etc/bash_completion.d
+
+if [ -d "$HOMEBREW_COMPLETIONS" ]; then
+    for i in "$HOMEBREW_COMPLETIONS"/* ; do
+        if [ -r "$i" ]; then
+            . $i
+        fi
+    done
+fi
