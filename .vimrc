@@ -14,7 +14,8 @@ Plugin 'https://github.com/bling/vim-airline.git'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic.git'
+Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'tpope/vim-fugitive'
 Plugin 'mileszs/ack.vim'
@@ -25,6 +26,9 @@ Plugin 'jmcantrell/vim-virtualenv'
 
 " THEMES
 Plugin 'morhetz/gruvbox'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'DAddYE/soda.vim'
+Plugin 'croaky/vim-colors-github'
 
 " End Vundle
 call vundle#end()
@@ -40,8 +44,14 @@ syntax on
 set mouse=a                         " Enable mouse
 set number
 set backup
-set directory=~/.vim/tmp
-set backupdir=~/.vim/backup
+
+" Creat backup and tmp directories
+" Delete old temp files on start
+silent execute '!mkdir -p ~/.vim/temp'
+silent execute '!rm -f ~/.vim/temp/*~'
+set backupdir=~/.vim/temp
+set directory=~/.vim/temp
+
 "set noshowcmd
 set showmatch
 "set noshowmode                      " Don't show current mode
@@ -61,8 +71,6 @@ set cursorline
 set foldlevel=99
 
 set antialias
-set background=dark
-colorscheme gruvbox
 set linespace=6
 
 if has("gui_running")
@@ -80,7 +88,14 @@ if has("gui_running")
     set guioptions-=T
 
     " Transparency
-    set transparency=20
+    set transparency=5
+
+    set background=light
+    colorscheme solarized
+
+else
+    set background=dark
+    colorscheme gruvbox
 endif
 
 set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
@@ -94,7 +109,8 @@ let mapleader = ","
 nmap <leader>w :w!<cr>
 
 " ,. to select next tab
-nmap <leader>. :tabnext<cr>
+nmap <leader>- :tabnext<cr>
+nmap <leader>. :bNext<cr>
 
 " use jj to return to normal mode
 imap jj <Esc>
@@ -120,10 +136,10 @@ map <F2> :set list!<cr>
 map <F3> :execute 'NERDTreeToggle ' . getcwd()<cr>
 map <F4> :NERDTreeFromBookmark
 
-inoremap <F5> <C-O>za
-nnoremap <F5> za
-onoremap <F5> <C-C>za
-vnoremap <F5> zf
+inoremap <C-z> <C-O>za
+nnoremap <C-z> za
+onoremap <C-z> <C-C>za
+vnoremap <C-z> zf
 
 " Strip whitespace
 nnoremap <leader>l :Strip<cr>
