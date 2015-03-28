@@ -1,8 +1,9 @@
-" be iMproved, required
 set nocompatible
-
-"vundle required
 filetype off
+
+if !isdirectory(expand("~/.vim/bundle/Vundle.vim/.git"))
+    !git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+endif
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -23,6 +24,8 @@ Plugin 'idanarye/vim-merginal'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'mhinz/vim-signify'
 Plugin 'jmcantrell/vim-virtualenv'
+Plugin 'kien/ctrlp.vim'
+Plugin 'Yggdroot/indentLine'
 
 " THEMES
 Plugin 'morhetz/gruvbox'
@@ -52,14 +55,22 @@ silent execute '!rm -f ~/.vim/temp/*~'
 set backupdir=~/.vim/temp
 set directory=~/.vim/temp
 
-"set noshowcmd
+" Fix Backspace
+set backspace=indent,eol,start
+
+set encoding=utf-8
+set t_Co=256
+set term=xterm-256color
+set termencoding=utf-8
+set fillchars+=stl:\ ,stlnc:\
+
+set laststatus=2
 set showmatch
-"set noshowmode                      " Don't show current mode
 set ruler
 set hlsearch
 set incsearch
-"set noerrorbells
-"set visualbell
+set noerrorbells
+set visualbell
 set tabstop=4
 set shiftwidth=4
 set autoindent
@@ -73,8 +84,8 @@ set foldlevel=99
 set antialias
 set linespace=6
 
+
 if has("gui_running")
-    " set guifont=Input\ Mono\ Narrow:h14
     set guifont=Ubuntu\ Mono:h16
 
     " Hide scrollbars
@@ -107,6 +118,9 @@ let mapleader = ","
 
 ",w to save
 nmap <leader>w :w!<cr>
+
+",t to create a new tab
+nmap <leader>t :tabnew<cr>
 
 " ,. to select next tab
 nmap <leader>- :tabnext<cr>
@@ -157,6 +171,9 @@ let NERDTreeMinimalUI=1
 " Display NERDTree on right side
 let g:NERDTreeWinPos = "right"
 
+" IndentLine
+let g:indentLine_char = '︙'
+
 " CoffeeScript linter and Watcher settings
 let coffee_compile_vert = 1
 let coffee_watch_vert = 1
@@ -175,8 +192,27 @@ let g:syntastic_warning_symbol = '!'
 
 " Vim Airline settings
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
+
+let g:airline_powerline_fonts=0
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
 
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
