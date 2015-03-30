@@ -27,6 +27,4 @@ Temporary Items
 ### User ###
 
 # Remove private files
-
-.bashrc.d/private_*
-!.basrc.d/private
+.bashrc.d/private*
