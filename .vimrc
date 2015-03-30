@@ -25,8 +25,10 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'mhinz/vim-signify'
 Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'kien/ctrlp.vim'
-Plugin 'Yggdroot/indentLine'
+"Plugin 'Yggdroot/indentLine'
 Plugin 'taglist.vim'
+Plugin 'jiangmiao/auto-pairs'
+"Plugin 'klen/python-mode'
 
 " THEMES
 Plugin 'morhetz/gruvbox'
@@ -46,6 +48,7 @@ filetype plugin indent on
 syntax on
 
 set mouse=a                         " Enable mouse
+set relativenumber
 set number
 set backup
 
@@ -223,7 +226,24 @@ let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '!'
 
+" Disable syntax checking for python files (python-mode)
+"let g:pymode_lint_write = 0
+
+"autocmd FileType python let g:syntastic_check_on_wq = 0
+
 " Vim Airline settings
+" ------------------------------------------
+let g:ctrlp_custom_ignore='\v[\/](node_modules|env)|(\.(swp|ico|git|svn|hg|pyc))$'
+let g:ctrlp_working_path_mode = 'ra'
+"let g:ctrlp_match_window_bottom=1
+"let g:ctrlp_max_height=15
+"let g:ctrlp_match_window_reversed=0
+"let g:ctrlp_mruf_max=500
+"let g:ctrlp_follow_symlinks=1
+"let g:ctrlp_clear_cache_on_exit=0
+
+" Set airline options
+" ------------------------------------------
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#left_sep = ' '
@@ -246,6 +266,12 @@ let g:airline_symbols.paste = 'ρ'
 let g:airline_symbols.paste = 'Þ'
 let g:airline_symbols.paste = '∥'
 let g:airline_symbols.whitespace = 'Ξ'
+
+" change cursor shape between insert and normal mode in iTerm2.app
+if $TERM_PROGRAM =~ "iTerm"
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+endif
 
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
@@ -277,11 +303,6 @@ augroup vimrc
   au BufReadPre * setlocal foldmethod=indent
   au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
 augroup END
-
-" Use The Silver Searcher if available
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
 
 " AutoClose
 autocmd CompleteDone * pclose
