@@ -144,6 +144,18 @@ vmap <S-Tab> :<<CR>gv
 " Search with Ack
 nmap <leader>a <Esc>:Ack!
 
+" Pane resize
+map <silent> <S-Right> <C-w><
+map <silent> <S-Down> <C-W>-
+map <silent> <S-Up> <C-W>+
+map <silent> <S-Left> <C-w>>
+
+" Switch Panes
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
 " NERDTree Settings
 nnoremap <F1> :set hlsearch!<CR>
 map <F2> :set list!<cr>
