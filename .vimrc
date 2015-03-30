@@ -26,6 +26,7 @@ Plugin 'mhinz/vim-signify'
 Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'kien/ctrlp.vim'
 Plugin 'Yggdroot/indentLine'
+Plugin 'taglist.vim'
 
 " THEMES
 Plugin 'morhetz/gruvbox'
@@ -161,6 +162,7 @@ nnoremap <F1> :set hlsearch!<CR>
 map <F2> :set list!<cr>
 map <F3> :execute 'NERDTreeToggle ' . getcwd()<cr>
 map <F4> :NERDTreeFromBookmark
+nnoremap <F5> :TlistToggle<CR>
 
 inoremap <C-z> <C-O>za
 nnoremap <C-z> za
@@ -172,6 +174,12 @@ nnoremap <leader>l :Strip<cr>
 
 " MISC SETTINGS
 " -------------------------------------------------------------------------------------------------
+" let TagList open on right side
+let Tlist_Use_Right_Window   = 1
+
+" Display NERDTree on right side
+let g:NERDTreeWinPos = "left"
+
 " let NERDTree ignore som files
 let NERDTreeIgnore=['\.pyc$', '\~$', '__pycache__']
 
@@ -179,9 +187,6 @@ let NERDTreeIgnore=['\.pyc$', '\~$', '__pycache__']
 let NERDTreeQuitOnOpen=0
 let NERDTreeDirArrows=1
 let NERDTreeMinimalUI=1
-
-" Display NERDTree on right side
-let g:NERDTreeWinPos = "right"
 
 " IndentLine
 let g:indentLine_char = '︙'
