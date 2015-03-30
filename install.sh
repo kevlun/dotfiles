@@ -77,7 +77,7 @@ link_file ()
       if [ $1 == .bashrc ] || [ $1 == .bash_profile ]; then
         warn "You might want to copy it into .bashrc.d if you want to keep it."
       fi
-      mkdir $BACKUPDIR
+      mkdir -p $BACKUPDIR
       mv $HOME/$1 $BACKUPDIR
 
     fi
