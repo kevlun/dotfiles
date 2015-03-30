@@ -109,8 +109,8 @@ if has("gui_running")
     colorscheme solarized
 
 else
-    set background=dark
-    colorscheme gruvbox
+    set background=light
+    colorscheme solarized
 endif
 
 set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
@@ -137,7 +137,7 @@ imap jj <Esc>
 " inoremap <S-Tab> <C-d>
 nmap <Tab> a<C-t><Esc>
 nmap <S-Tab> a<C-d><Esc>
-" imap <C-Tab> <C-t>
+imap <C-Tab> <C-t>
 imap <S-Tab> <C-d>
 
 vmap <Tab> :><CR>gv
