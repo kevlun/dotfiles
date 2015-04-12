@@ -218,6 +218,9 @@ let g:ctrlp_working_path_mode = 'ra'
 
 " Set linter options
 " -------------------------------------------------------------------------------------------------
+let g:syntastic_enable_highlighting=1
+let g:syntastic_enable_signs=1
+let g:syntastic_enable_balloons=1
 let g:syntastic_python_checkers = ['pylint']
 " let g:syntastic_python_pylint_args = "--"
 
