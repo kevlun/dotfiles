@@ -37,6 +37,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'DAddYE/soda.vim'
 Plugin 'croaky/vim-colors-github'
 Plugin 'sickill/vim-monokai'
+Plugin 'jonathanfilip/vim-lucius'
 
 " End Vundle
 call vundle#end()
