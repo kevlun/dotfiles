@@ -36,6 +36,7 @@ Plugin 'morhetz/gruvbox'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'DAddYE/soda.vim'
 Plugin 'croaky/vim-colors-github'
+Plugin 'sickill/vim-monokai'
 
 " End Vundle
 call vundle#end()
@@ -62,13 +63,8 @@ set directory=~/.vim/temp
 
 " Fix Backspace
 set backspace=indent,eol,start
-
 set encoding=utf-8
-set t_Co=256
-set term=xterm-256color
-set termencoding=utf-8
 set fillchars+=stl:\ ,stlnc:\
-
 set laststatus=2
 set showmatch
 set ruler
@@ -80,18 +76,14 @@ set tabstop=4
 set shiftwidth=4
 set autoindent
 set smartindent
-"set noequalalways
 set expandtab
 set cursorline
-
 set foldlevel=99
-
 set antialias
 set linespace=6
 
-
 if has("gui_running")
-    set guifont=Ubuntu\ Mono:h16
+    set guifont=Inconsolata-dz\ for\ Powerline:h14
 
     " Hide scrollbars
     set guioptions-=r
@@ -110,8 +102,12 @@ if has("gui_running")
     colorscheme solarized
 
 else
+    set guifont=Fira\ Mono\ for\ Powerline:h14
     set background=dark
     colorscheme gruvbox
+    set t_Co=256
+    set term=xterm-256color
+    set termencoding=utf-8
 endif
 
 set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
@@ -178,6 +174,11 @@ nnoremap <leader>l :Strip<cr>
 " let TagList open on right side
 let Tlist_Use_Right_Window   = 1
 
+" Change Directory to Project directory
+if isdirectory(expand("~/Projects"))
+    cd ~/Projects
+endif
+
 " Display NERDTree on right side
 let g:NERDTreeWinPos = "left"
 
@@ -233,12 +234,12 @@ let g:syntastic_warning_symbol = '!'
 " -------------------------------------------------------------------------------------------------
 let g:ctrlp_custom_ignore='\v[\/](node_modules|env)|(\.(swp|ico|git|svn|hg|pyc))$'
 let g:ctrlp_working_path_mode = 'ra'
-"let g:ctrlp_match_window_bottom=1
-"let g:ctrlp_max_height=15
-"let g:ctrlp_match_window_reversed=0
-"let g:ctrlp_mruf_max=500
-"let g:ctrlp_follow_symlinks=1
-"let g:ctrlp_clear_cache_on_exit=0
+let g:ctrlp_match_window_bottom=1
+let g:ctrlp_max_height=15
+let g:ctrlp_match_window_reversed=0
+let g:ctrlp_mruf_max=500
+let g:ctrlp_follow_symlinks=1
+let g:ctrlp_clear_cache_on_exit=0
 
 " Set airline options
 " -------------------------------------------------------------------------------------------------
@@ -247,23 +248,23 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 
-let g:airline_powerline_fonts=0
+let g:airline_powerline_fonts=1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
+"let g:airline_left_sep = '»'
+"let g:airline_left_sep = '▶'
+"let g:airline_right_sep = '«'
+"let g:airline_right_sep = '◀'
+"let g:airline_symbols.linenr = '␊'
+"let g:airline_symbols.linenr = '␤'
+"let g:airline_symbols.linenr = '¶'
+"let g:airline_symbols.branch = '⎇'
+"let g:airline_symbols.paste = 'ρ'
+"let g:airline_symbols.paste = 'Þ'
+"let g:airline_symbols.paste = '∥'
+"let g:airline_symbols.whitespace = 'Ξ'
 
 " NeoComplete settings
 " -------------------------------------------------------------------------------------------------
@@ -284,7 +285,7 @@ let g:neocomplete#sources#dictionary#dictionaries = {
     \ 'default' : '',
     \ 'vimshell' : $HOME.'/.vimshell_hist',
     \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
+    \ }
 
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
@@ -313,16 +314,6 @@ inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
 " Close popup by <Space>.
 "inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
-
-" For cursor moving in insert mode(Not recommended)
-"inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
-"inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
-"inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
-"inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
-" Or set this.
-"let g:neocomplete#enable_cursor_hold_i = 1
-" Or set this.
-"let g:neocomplete#enable_insert_char_pre = 1
 
 " AutoComplPop like behavior.
 "let g:neocomplete#enable_auto_select = 1
