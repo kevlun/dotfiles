@@ -87,7 +87,7 @@ set linespace=6
 
 " Theme settings
 set background=dark
-colorscheme gruvbox
+colorscheme hybrid
 
 if has("gui_running")
     set guifont=Ubuntu\ Mono\ derivative\ Powerline:h16
@@ -128,8 +128,8 @@ nmap <leader>w :w!<cr>
 nmap <leader>t :tabnew<cr>
 
 " ,. to select next tab
-nmap <leader>- :tabnext<cr>
-nmap <leader>. :bNext<cr>
+nmap <leader>- :bn<cr>
+nmap <leader>. :bp<cr>
 
 " use jj to return to normal mode
 imap jj <Esc>
@@ -194,8 +194,17 @@ let NERDTreeQuitOnOpen=0
 let NERDTreeDirArrows=1
 let NERDTreeMinimalUI=1
 
-" IndentLine
-let g:indentLine_char = '︙'
+let g:NERDTreeIndicatorMap = {
+    \ "Modified"  : "~",
+    \ "Staged"    : "+",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "X",
+    \ "Dirty"     : "~",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
 
 " CoffeeScript linter and Watcher settings
 let coffee_compile_vert = 1
@@ -213,12 +222,12 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 
 let g:ctrlp_custom_ignore='\v[\/](node_modules|env)|(\.(swp|ico|git|svn|hg|pyc))$'
 let g:ctrlp_working_path_mode = 'ra'
-"let g:ctrlp_match_window_bottom=1
-"let g:ctrlp_max_height=15
-"let g:ctrlp_match_window_reversed=0
-"let g:ctrlp_mruf_max=500
-"let g:ctrlp_follow_symlinks=1
-"let g:ctrlp_clear_cache_on_exit=0
+let g:ctrlp_match_window_bottom=1
+let g:ctrlp_max_height=15
+let g:ctrlp_match_window_reversed=0
+let g:ctrlp_mruf_max=500
+let g:ctrlp_follow_symlinks=1
+let g:ctrlp_clear_cache_on_exit=0
 
 " Set linter options
 " -------------------------------------------------------------------------------------------------
