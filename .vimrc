@@ -38,6 +38,8 @@ Plugin 'DAddYE/soda.vim'
 Plugin 'croaky/vim-colors-github'
 Plugin 'sickill/vim-monokai'
 Plugin 'jonathanfilip/vim-lucius'
+Plugin 'w0ng/vim-hybrid'
+Plugin 'zeis/vim-kolor'
 
 " End Vundle
 call vundle#end()
@@ -83,8 +85,12 @@ set foldlevel=99
 set antialias
 set linespace=6
 
+" Theme settings
+set background=dark
+colorscheme gruvbox
+
 if has("gui_running")
-    set guifont=Inconsolata-dz\ for\ Powerline:h14
+    set guifont=Ubuntu\ Mono\ derivative\ Powerline:h16
 
     " Hide scrollbars
     set guioptions-=r
@@ -99,13 +105,10 @@ if has("gui_running")
     " Transparency
     set transparency=5
 
-    set background=light
-    colorscheme solarized
+    "set background=light
+    "colorscheme solarized 
 
 else
-    set guifont=Fira\ Mono\ for\ Powerline:h14
-    set background=dark
-    colorscheme gruvbox
     set t_Co=256
     set term=xterm-256color
     set termencoding=utf-8
@@ -219,15 +222,17 @@ let g:ctrlp_working_path_mode = 'ra'
 
 " Set linter options
 " -------------------------------------------------------------------------------------------------
-let g:syntastic_enable_highlighting=1
-let g:syntastic_enable_signs=1
-let g:syntastic_enable_balloons=1
-let g:syntastic_python_checkers = ['pylint']
-" let g:syntastic_python_pylint_args = "--"
-
 " Better :sign interface symbols
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '!'
+
+let g:syntastic_enable_highlighting=1
+let g:syntastic_enable_signs=0
+let g:syntastic_enable_balloons=1
+let g:syntastic_python_checkers = ['pylint']
+
+let g:syntastic_php_phpcs_args="--report=csv --standard=PSR2"
+" let g:syntastic_python_pylint_args = "--"
 
 " Disable syntax checking for python files (python-mode)
 "let g:pymode_lint_write = 0
