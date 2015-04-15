@@ -13,7 +13,6 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'https://github.com/bling/vim-airline.git'
 Plugin 'kchmck/vim-coffee-script'
-"Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdcommenter'
@@ -25,11 +24,11 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'mhinz/vim-signify'
 Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'kien/ctrlp.vim'
-"Plugin 'Yggdroot/indentLine'
 Plugin 'taglist.vim'
 Plugin 'jiangmiao/auto-pairs'
-"Plugin 'klen/python-mode'
 Plugin 'Shougo/neocomplete.vim'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'Lokaltog/vim-easymotion'
 
 " THEMES
 Plugin 'morhetz/gruvbox'
@@ -40,6 +39,8 @@ Plugin 'sickill/vim-monokai'
 Plugin 'jonathanfilip/vim-lucius'
 Plugin 'w0ng/vim-hybrid'
 Plugin 'zeis/vim-kolor'
+Plugin 'notpratheek/vim-luna'
+Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 
 " End Vundle
 call vundle#end()
@@ -55,14 +56,24 @@ syntax on
 set mouse=a                         " Enable mouse
 set relativenumber
 set number
-set backup
+set shell=/bin/bash\ -li
 
+" Disable Backup
+" -------------------------------------
+set nobackup
+set noswapfile
+set nowritebackup
+
+" Enable Backup
+" -------------------------------------
+"set backup
 " Creat backup and tmp directories
 " Delete old temp files on start
-silent execute '!mkdir -p ~/.vim/temp'
-silent execute '!rm -f ~/.vim/temp/*~'
-set backupdir=~/.vim/temp
-set directory=~/.vim/temp
+"silent execute '!mkdir -p ~/.vim/temp'
+"silent execute '!rm -f ~/.vim/temp/*~'
+"set backupdir=~/.vim/temp
+"set directory=~/.vim/temp
+" -------------------------------------
 
 " Fix Backspace
 set backspace=indent,eol,start
@@ -84,6 +95,7 @@ set cursorline
 set foldlevel=99
 set antialias
 set linespace=6
+set noequalalways
 
 " Theme settings
 set background=dark
@@ -105,8 +117,9 @@ if has("gui_running")
     " Transparency
     set transparency=5
 
-    "set background=light
-    "colorscheme solarized 
+    set background=light
+    colorscheme solarized
+    "hi Normal ctermfg=231 ctermbg=NONE cterm=NONE guifg=#f8f8f2 guibg=#282a36 gui=NONE
 
 else
     set t_Co=256
@@ -162,7 +175,8 @@ map <C-l> <C-W>l
 nnoremap <F1> :set hlsearch!<CR>
 map <F2> :set list!<cr>
 map <F3> :execute 'NERDTreeToggle ' . getcwd()<cr>
-map <F4> :NERDTreeFromBookmark
+map <F4> :NERDTree .<cr>
+"map <F4> :NERDTreeFromBookmark
 nnoremap <F5> :TlistToggle<CR>
 
 inoremap <C-z> <C-O>za
@@ -173,15 +187,26 @@ vnoremap <C-z> zf
 " Strip whitespace
 nnoremap <leader>l :Strip<cr>
 
+" CTRL-P
+nnoremap <Leader>o :execute 'CtrlP ' . getcwd()<cr>
+nnoremap <Leader>r :CtrlPMRU<cr>
+nnoremap <Leader>b :CtrlPBuffer<cr>
+
+" EasyMotion
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
+
 " MISC SETTINGS
 " -------------------------------------------------------------------------------------------------
 " let TagList open on right side
 let Tlist_Use_Right_Window   = 1
 
 " Change Directory to Project directory
-if isdirectory(expand("~/Projects"))
-    cd ~/Projects
-endif
+"if isdirectory(expand("~/Projects"))
+    "cd ~/Projects
+"endif
 
 " Display NERDTree on right side
 let g:NERDTreeWinPos = "left"
@@ -193,11 +218,12 @@ let NERDTreeIgnore=['\.pyc$', '\~$', '__pycache__']
 let NERDTreeQuitOnOpen=0
 let NERDTreeDirArrows=1
 let NERDTreeMinimalUI=1
+let NERDTreeChDirMode=2
 
 let g:NERDTreeIndicatorMap = {
     \ "Modified"  : "~",
     \ "Staged"    : "+",
-    \ "Untracked" : "✭",
+    \ "Untracked" : "+",
     \ "Renamed"   : "➜",
     \ "Unmerged"  : "═",
     \ "Deleted"   : "X",
@@ -226,10 +252,23 @@ let g:ctrlp_match_window_bottom=1
 let g:ctrlp_max_height=15
 let g:ctrlp_match_window_reversed=0
 let g:ctrlp_mruf_max=500
-let g:ctrlp_follow_symlinks=1
+let g:ctrlp_follow_symlinks=0
 let g:ctrlp_clear_cache_on_exit=0
+let g:ctrlp_switch_buffer = 'E'
 
-" Set linter options
+let g:ctrlp_use_caching = 0
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor
+
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+else
+  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+  let g:ctrlp_prompt_mappings = {
+    \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
+    \ }
+endif
+
+" Syntastice Linter Options
 " -------------------------------------------------------------------------------------------------
 " Better :sign interface symbols
 let g:syntastic_error_symbol = '✗'
@@ -249,17 +288,6 @@ let g:syntastic_php_phpcs_args="--report=csv --standard=PSR2"
 "autocmd FileType python let g:syntastic_check_on_wq = 0
 
 " Vim Airline settings
-" -------------------------------------------------------------------------------------------------
-let g:ctrlp_custom_ignore='\v[\/](node_modules|env)|(\.(swp|ico|git|svn|hg|pyc))$'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_match_window_bottom=1
-let g:ctrlp_max_height=15
-let g:ctrlp_match_window_reversed=0
-let g:ctrlp_mruf_max=500
-let g:ctrlp_follow_symlinks=1
-let g:ctrlp_clear_cache_on_exit=0
-
-" Set airline options
 " -------------------------------------------------------------------------------------------------
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
@@ -321,7 +349,7 @@ inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
   return neocomplete#close_popup() . "\<CR>"
   " For no inserting <CR> key.
-  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+  return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
