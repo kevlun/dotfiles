@@ -29,6 +29,7 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Lokaltog/vim-easymotion'
+Plugin 'public/vim-sort-python-imports'
 
 " THEMES
 Plugin 'morhetz/gruvbox'
@@ -117,8 +118,8 @@ if has("gui_running")
     " Transparency
     set transparency=5
 
-    set background=light
-    colorscheme solarized
+    "set background=light
+    "colorscheme solarized
     "hi Normal ctermfg=231 ctermbg=NONE cterm=NONE guifg=#f8f8f2 guibg=#282a36 gui=NONE
 
 else
@@ -179,6 +180,7 @@ map <F4> :NERDTree .<cr>
 "map <F4> :NERDTreeFromBookmark
 nnoremap <F5> :TlistToggle<CR>
 
+" FIX: Replace with leader keymaps instead
 inoremap <C-z> <C-O>za
 nnoremap <C-z> za
 onoremap <C-z> <C-C>za
@@ -193,10 +195,10 @@ nnoremap <Leader>r :CtrlPMRU<cr>
 nnoremap <Leader>b :CtrlPBuffer<cr>
 
 " EasyMotion
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-map  n <Plug>(easymotion-next)
-map  N <Plug>(easymotion-prev)
+"map  / <Plug>(easymotion-sn)
+"omap / <Plug>(easymotion-tn)
+"map  n <Plug>(easymotion-next)
+"map  N <Plug>(easymotion-prev)
 
 " MISC SETTINGS
 " -------------------------------------------------------------------------------------------------
@@ -278,6 +280,7 @@ let g:syntastic_enable_highlighting=1
 let g:syntastic_enable_signs=0
 let g:syntastic_enable_balloons=1
 let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_coffee_checkers = ['coffeelint', 'coffee']
 
 let g:syntastic_php_phpcs_args="--report=csv --standard=PSR2"
 " let g:syntastic_python_pylint_args = "--"
